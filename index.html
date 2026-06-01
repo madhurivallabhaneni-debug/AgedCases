@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aged Cases Review</title>
+
+<!-- ╔══════════════════════════════════════════════════════════════════════╗
+     ║  DATA — UPDATE THIS SECTION EACH RUN                               ║
+     ╚══════════════════════════════════════════════════════════════════════╝ -->
+<script id="weekly-data" type="application/json">
+{
+  "meta": {
+    "title": "Aged Cases Review",
+    "preparedBy": "Madhuri Vallabhaneni",
+    "role": "Manager, Technical Support Engineering",
+    "preparedDate": "June 1, 2026",
+    "threshold": 25,
+    "region": "EMEA Dev Support"
+  },
+
+  "kpis": {
+    "total": 11,
+    "critical": 1,
+    "productionImpacting": 2,
+    "nmiStale": 5,
+    "solutionNotClosed": 1,
+    "topTSEName": "Sai Praneeth Allam",
+    "topTSECount": 3
+  },
+
+  "ageDistribution": [
+    { "label": "60+ days (Critical)",  "count": 1, "pct": 9,  "color": "#e53e3e" },
+    { "label": "45–59 days (High)",    "count": 1, "pct": 9,  "color": "#dd6b20" },
+    { "label": "30–44 days (Medium)",  "count": 4, "pct": 36, "color": "#d69e2e" },
+    { "label": "26–29 days (Crossed)", "count": 5, "pct": 45, "color": "#3182ce" }
+  ],
+
+  "cases": [
+    {
+      "caseNum": "473102981",
+      "account": "Sika Informationssysteme AG",
+      "owner": "Sai Saranya Reddy",
+      "ageDays": 67,
+      "status": "Working",
+      "region": "AMER-PST",
+      "severity": "red",
+      "badges": [
+        { "text": "67 Days", "style": "red" },
+        { "text": "Working", "style": "orange" }
+      ],
+      "issue": "Component removed but still appearing in JSON payload.",
+      "narrative": "Case has been open 67 days — the oldest on the team. Currently in Working status. No escalation CL on record. Requires immediate review to determine root cause, next step, and whether an escalation or engineering engagement is needed.",
+      "riskFlag": "Oldest case on team — no escalation on record at 67 days",
+      "action": "Immediate manager review. Determine if Engineering engagement or escalation CL is required."
+    },
+    {
+      "caseNum": "473232023",
+      "account": "Ather Energy Limited",
+      "owner": "Sai Praneeth Allam",
+      "ageDays": 49,
+      "status": "Working",
+      "region": "AMER-PST",
+      "severity": "orange",
+      "badges": [
+        { "text": "49 Days", "style": "orange" },
+        { "text": "Production Impact", "style": "red" },
+        { "text": "Working", "style": "orange" }
+      ],
+      "issue": "Record Lock Error impacting production work within Cases.",
+      "narrative": "Production-impacting issue open 49 days. Customer is experiencing record lock errors affecting live operations. Case remains in Working status with no resolution in sight based on current data.",
+      "riskFlag": "Production impact + 49 days open — escalation risk",
+      "action": "Review with Sai Praneeth: what is blocking resolution? Is an escalation CL needed? Proactive customer update required."
+    },
+    {
+      "caseNum": "473316941",
+      "account": "Kerry Group Services International",
+      "owner": "Priyanka Ventrapragada",
+      "ageDays": 39,
+      "status": "Need More Information",
+      "region": "EMEA",
+      "severity": "yellow",
+      "badges": [
+        { "text": "39 Days", "style": "yellow" },
+        { "text": "Need More Info", "style": "orange" }
+      ],
+      "issue": "Email-to-Case Duplicate_Value error persisting after fix deployment.",
+      "narrative": "Customer reported the error has been occurring for about a week and persists despite a fix deployment. Case is currently in Need More Information — verify this is genuinely awaiting customer input and not parked.",
+      "riskFlag": "NMI at 39 days — confirm customer last activity",
+      "action": "Verify NMI status is legitimate. If customer has not responded in >7 days, drive to closure or next step."
+    },
+    {
+      "caseNum": "473341231",
+      "account": "Blackstone Administrative Services Partnership",
+      "owner": "Mukul Mishra",
+      "ageDays": 35,
+      "status": "Need More Information",
+      "region": "IST",
+      "severity": "orange",
+      "badges": [
+        { "text": "35 Days", "style": "yellow" },
+        { "text": "99% File Storage", "style": "red" },
+        { "text": "Need More Info", "style": "orange" }
+      ],
+      "issue": "Riva integration creating duplicate ContentDocuments — file storage at 99% capacity due to orphaned files.",
+      "narrative": "Riva/Outlook integration is causing duplicate ContentDocuments with orphaned files. Storage is at 99%. Integration user with Modify All Data cannot access ContentDocumentLink records it created, triggering repeated uploads. This is approaching a storage crisis — any further sync activity could push the org over limit.",
+      "riskFlag": "Storage crisis imminent — 99% consumed, orphaned files growing",
+      "action": "Urgent: assess whether emergency storage action is needed. Determine if escalation CL should be raised. Engage Riva/customer on immediate workaround."
+    },
+    {
+      "caseNum": "473342199",
+      "account": "AXA XL (XL Caitlin - Producer Admin)",
+      "owner": "Mukul Mishra",
+      "ageDays": 35,
+      "status": "Working",
+      "region": "EMEA",
+      "severity": "yellow",
+      "badges": [
+        { "text": "35 Days", "style": "yellow" },
+        { "text": "Working", "style": "orange" },
+        { "text": "Intermittent", "style": "grey" }
+      ],
+      "issue": "LWC component button opens page that returns 404 — intermittent, affects all users.",
+      "narrative": "A LWC component opens an attachment download page in a new browser window. Page shows 'page doesn't exist' (404) intermittently across all users. At 35 days this requires a clearer investigation path or Engineering involvement.",
+      "riskFlag": "35 days without resolution on an all-users intermittent issue",
+      "action": "Review investigation progress with Mukul. If root cause not identified, escalate to Engineering."
+    },
+    {
+      "caseNum": "473360937",
+      "account": "BON PREU, S.A.",
+      "owner": "Lokesh Verma",
+      "ageDays": 33,
+      "status": "Solution Provided",
+      "region": "EMEA",
+      "severity": "yellow",
+      "badges": [
+        { "text": "33 Days", "style": "yellow" },
+        { "text": "Solution Provided", "style": "green" }
+      ],
+      "issue": "Unexpected change in Marketing Cloud data field — subscriberkey field renamed in Data Extension.",
+      "narrative": "Solution has been provided but the case remains open after 33 days. If the customer has not responded to confirm resolution, this should be closed. Solution Provided cases that sit open this long indicate a follow-through gap.",
+      "riskFlag": "Solution Provided 33 days ago — not closed",
+      "action": "Close the case. If customer has not acknowledged in >7 days after solution provided, closure is appropriate."
+    },
+    {
+      "caseNum": "473392067",
+      "account": "Audi AG",
+      "owner": "Pratibha Shekhawat",
+      "ageDays": 28,
+      "status": "Working",
+      "region": "AMER-PST",
+      "severity": "yellow",
+      "badges": [
+        { "text": "28 Days", "style": "blue" },
+        { "text": "Working", "style": "orange" }
+      ],
+      "issue": "Automation Event Trigger flow works via UI but fails via API for file attachment.",
+      "narrative": "AUDI_CIC_FileAttachToCaseCaptureVoiceBotTranscript flow behaves differently via UI vs API. QA sandbox: 00D9V00000Fe5LJ. Just crossed the 25-day threshold — monitor closely.",
+      "riskFlag": "Just crossed threshold — 28 days",
+      "action": "Confirm investigation is active. Set a 7-day resolution target."
+    },
+    {
+      "caseNum": "473405098",
+      "account": "Aircall",
+      "owner": "Sai Praneeth Allam",
+      "ageDays": 26,
+      "status": "Need More Information",
+      "region": "IST",
+      "severity": "yellow",
+      "badges": [
+        { "text": "26 Days", "style": "blue" },
+        { "text": "Need More Info", "style": "orange" }
+      ],
+      "issue": "Clarification needed on mandatory security updates for Connected Apps and External Client Apps (ECAs).",
+      "narrative": "Customer has questions about ECA migration timeline and whether Connected Apps will be deprecated. They had proposed meeting slots on May 6 — unclear if a call was held. Currently in NMI.",
+      "riskFlag": "NMI — confirm whether customer meeting happened",
+      "action": "Confirm if the May 6 meeting occurred. If not, reschedule and provide written update."
+    },
+    {
+      "caseNum": "473405869",
+      "account": "ABB Information Systems Ltd.",
+      "owner": "Vinay Talapalle",
+      "ageDays": 26,
+      "status": "Working",
+      "region": "IST",
+      "severity": "yellow",
+      "badges": [
+        { "text": "26 Days", "style": "blue" },
+        { "text": "Working", "style": "orange" }
+      ],
+      "issue": "Contact data stream in Data Cloud sandbox ASPAIDEV returning error — needs removal from Data Kit.",
+      "narrative": "Contact data stream has an error status and cannot be deleted from the customer side — requires Data Kit removal. Just crossed the aged threshold.",
+      "riskFlag": "Just crossed threshold — requires backend action",
+      "action": "Confirm if Data Kit removal has been initiated. Follow up with customer on ETA."
+    },
+    {
+      "caseNum": "473406882",
+      "account": "Genpact Inc (Unilever PROD)",
+      "owner": "Sai Praneeth Allam",
+      "ageDays": 26,
+      "status": "Need More Information",
+      "region": "IST",
+      "severity": "orange",
+      "badges": [
+        { "text": "26 Days", "style": "blue" },
+        { "text": "Production", "style": "red" },
+        { "text": "Need More Info", "style": "orange" }
+      ],
+      "issue": "Email-to-Case not triggering randomly from Unilever PROD org (00D680000026rcy).",
+      "narrative": "Emails sent to dedicated Email-to-Case mailboxes are not generating cases randomly in Unilever's production org. Customer has provided message IDs for investigation. Production issue in NMI status.",
+      "riskFlag": "Production impact + NMI — Sai Praneeth's third aged case",
+      "action": "Review investigation status. Production NMI cases should not sit — drive to next action or closure."
+    },
+    {
+      "caseNum": "473409179",
+      "account": "International Business Machines of Belgium",
+      "owner": "Pratiksha Unhale",
+      "ageDays": 26,
+      "status": "Need More Information",
+      "region": "EMEA",
+      "severity": "yellow",
+      "badges": [
+        { "text": "26 Days", "style": "blue" },
+        { "text": "Need More Info", "style": "orange" }
+      ],
+      "issue": "SSO SAML2 exception: Expected a value other than null — UAT environment, Moodle to Salesforce Community.",
+      "narrative": "SSO issue with External Client App on UAT. Customer confirmed configuration is correct and is trying to debug the signature validation flow. Using Identity Provider with Moodle as the source.",
+      "riskFlag": "Just crossed threshold — SSO issue on UAT",
+      "action": "Confirm debugging steps in progress. Set a 7-day target."
+    }
+  ],
+
+  "summaryTable": [
+    {
+      "caseNum": "473102981", "account": "Sika Informationssysteme AG", "owner": "Sai Saranya Reddy",
+      "ageDays": 67, "ageStyle": "red", "status": "Working", "statusStyle": "orange", "region": "AMER-PST", "risk": "Critical", "riskStyle": "red",
+      "whyAged": "Complex Experience Cloud metadata deployment — each fix exposed a new error (Route ID mismatch, BrandingSet conflict, dangling references). Product Team looped in twice. Customer had leave days and public holidays. Sandbox fixed May 6; still awaiting customer to deploy fix to production.",
+      "causedBy": "Customer + Product Team", "causedByStyle": "orange",
+      "handledWell": "Yes", "handledStyle": "green",
+      "handledNote": "TSE actively engaged throughout — multiple calls, two Product Team escalations, direct metadata fixes provided. Age driven by technical complexity and customer-side delays, not TSE inactivity. Production deployment is the final blocker — nudge customer this week and close."
+    },
+    {
+      "caseNum": "473232023", "account": "Ather Energy Limited", "owner": "Sai Praneeth Allam",
+      "ageDays": 49, "ageStyle": "orange", "status": "Working", "statusStyle": "orange", "region": "AMER-PST", "risk": "High", "riskStyle": "red",
+      "whyAged": "Sev-1 production case with dedicated Slack channel raised on Day 1. 76 comments on file — full investigation history. Record lock errors in production are hard to isolate without consistent reproduction. Investigation ongoing but unresolved at 49 days.",
+      "causedBy": "Product Team", "causedByStyle": "red",
+      "handledWell": "Partially", "handledStyle": "orange",
+      "handledNote": "Sev-1 protocol followed (Slack channel raised immediately). However, 49 days unresolved on a production Sev-1 needs review. Pull the full comment history — if investigation has stalled, escalation CL and Engineering engagement are overdue."
+    },
+    {
+      "caseNum": "473341231", "account": "Blackstone Admin Services Partnership", "owner": "Mukul Mishra",
+      "ageDays": 35, "ageStyle": "yellow", "status": "Need More Info", "statusStyle": "orange", "region": "IST", "risk": "High", "riskStyle": "red",
+      "whyAged": "Deep ContentDocumentLink visibility bug with Riva integration. Mukul held a call Day 2, provided SOQL debugging steps, confirmed admin sees 53K records but integration user (even with System Admin profile) sees only 99. Vendor (Riva) looped in. Root cause not yet found after multiple investigation rounds.",
+      "causedBy": "Product Team + Vendor", "causedByStyle": "red",
+      "handledWell": "Partially", "handledStyle": "orange",
+      "handledNote": "Investigation is technically solid and customer engagement is good. But 35 days with 99% storage and no resolution — Engineering escalation is now overdue. Mukul committed to resolve 'this week' on May 25. Check if that happened and push for Engineering involvement."
+    },
+    {
+      "caseNum": "473342199", "account": "AXA XL", "owner": "Mukul Mishra",
+      "ageDays": 35, "ageStyle": "yellow", "status": "Working", "statusStyle": "orange", "region": "EMEA", "risk": "Medium", "riskStyle": "orange",
+      "whyAged": "Intermittent LWC 404 caused by async/await breaking the Aura event context. Mukul did deep HAR log analysis, identified the async race condition, proposed code fixes. Fix did not resolve in lower environments — debugging continues across multiple LWC components.",
+      "causedBy": "Product Team", "causedByStyle": "yellow",
+      "handledWell": "Yes", "handledStyle": "green",
+      "handledNote": "Strong technical depth — HAR analysis, Aura framework understanding, code-level suggestions. Customer actively testing. Age reflects genuine complexity of intermittent async issue, not poor handling. Investigation is live and progressing."
+    },
+    {
+      "caseNum": "473316941", "account": "Kerry Group Services International", "owner": "Priyanka Ventrapragada",
+      "ageDays": 39, "ageStyle": "yellow", "status": "Need More Info", "statusStyle": "orange", "region": "EMEA", "risk": "Medium", "riskStyle": "orange",
+      "whyAged": "Intermittent Email-to-Case duplicate value error — cannot be reliably reproduced. Calls held, server logs checked, backend reviewed. Customer's Automation User handles multiple integrations, making targeted debug logging difficult. Customer actively engaged, working with SMEs to capture logs.",
+      "causedBy": "Customer", "causedByStyle": "yellow",
+      "handledWell": "Yes", "handledStyle": "green",
+      "handledNote": "Well handled — calls held, server logs reviewed, customer kept engaged. Age driven by intermittent nature and customer org constraints on debug logging. NMI is legitimate — no TSE inactivity gap."
+    },
+    {
+      "caseNum": "473360937", "account": "BON PREU, S.A.", "owner": "Lokesh Verma",
+      "ageDays": 33, "ageStyle": "yellow", "status": "Solution Provided", "statusStyle": "green", "region": "EMEA", "risk": "Low", "riskStyle": "yellow",
+      "whyAged": "Case was initially misrouted to MC Engagement, then transferred to Data Cloud (Lokesh). Root cause confirmed May 29 — customer configured a custom output name in their DC activation, which is documented expected behavior. Age reflects misroute delay and customer changing the activation mid-investigation.",
+      "causedBy": "Agent (misroute) + Customer", "causedByStyle": "orange",
+      "handledWell": "Yes", "handledStyle": "green",
+      "handledNote": "Root cause correctly identified with documentation reference. Age reflects initial misroute and customer config change mid-case. Just needs customer acknowledgement — close this week."
+    },
+    {
+      "caseNum": "473392067", "account": "Audi AG", "owner": "Pratibha Shekhawat",
+      "ageDays": 28, "ageStyle": "blue", "status": "Working", "statusStyle": "orange", "region": "AMER-PST", "risk": "Medium", "riskStyle": "orange",
+      "whyAged": "Case initially misrouted to wrong timezone TSE (Petra, EST for a Portugal customer), causing 3-day delay. Once with Pratibha, she replicated the issue: API file uploads fire events with null payload fields unlike UI. Escalated to Product/R&D team May 29 — likely a platform-level bug.",
+      "causedBy": "Agent (misroute) + Product Team", "causedByStyle": "orange",
+      "handledWell": "Partially", "handledStyle": "orange",
+      "handledNote": "Strong technical work once assigned — issue replicated in demo org, root cause identified, escalated to Product. Initial misroute added unnecessary delay. Awaiting Product response — escalation CL may be warranted given Audi's account size."
+    },
+    {
+      "caseNum": "473406882", "account": "Genpact Inc (Unilever PROD)", "owner": "Sai Praneeth Allam",
+      "ageDays": 26, "ageStyle": "blue", "status": "Need More Info", "statusStyle": "orange", "region": "IST", "risk": "High", "riskStyle": "red",
+      "whyAged": "Sai Praneeth identified 'Regex too complicated' error from server logs on Day 1, held a call Day 2. Multiple debug log reviews done — error not appearing in logs despite several batches shared. Investigation stuck in a loop. Latest call May 28; waiting on targeted logs capturing the specific failing transaction.",
+      "causedBy": "Customer", "causedByStyle": "yellow",
+      "handledWell": "Yes", "handledStyle": "green",
+      "handledNote": "Response fast, investigation thorough and methodical. However, after 26 days of the same debug loop, a different approach is needed — escalate to Engineering to capture server-side traces directly rather than relying solely on customer-side logs."
+    },
+    {
+      "caseNum": "473405098", "account": "Aircall", "owner": "Sai Praneeth Allam",
+      "ageDays": 26, "ageStyle": "blue", "status": "Need More Info", "statusStyle": "orange", "region": "IST", "risk": "Low", "riskStyle": "yellow",
+      "whyAged": "Advisory/guidance case about ECA migration and Connected App deprecation. Not a break/fix. NMI likely reflects customer reviewing the guidance provided before confirming.",
+      "causedBy": "Customer", "causedByStyle": "blue",
+      "handledWell": "Likely yes", "handledStyle": "green",
+      "handledNote": "Advisory cases on ECA migration require customer-side review time. Confirm guidance was fully provided. If no customer response in >7 days, close."
+    },
+    {
+      "caseNum": "473405869", "account": "ABB Information Systems Ltd.", "owner": "Vinay Talapalle",
+      "ageDays": 26, "ageStyle": "blue", "status": "Working", "statusStyle": "orange", "region": "IST", "risk": "Low", "riskStyle": "yellow",
+      "whyAged": "Data Cloud Contact stream error requiring Data Kit removal — a backend action dependent on Salesforce internal teams. Vinay took ownership promptly and requested org access. Age reflects internal team dependency, not TSE inactivity.",
+      "causedBy": "Product Team", "causedByStyle": "yellow",
+      "handledWell": "Likely yes", "handledStyle": "green",
+      "handledNote": "If the Data Kit removal request was raised promptly after initial contact, age is justified by internal dependency. Confirm request is queued and communicate ETA to customer."
+    },
+    {
+      "caseNum": "473409179", "account": "International Business Machines of Belgium", "owner": "Pratiksha Unhale",
+      "ageDays": 26, "ageStyle": "blue", "status": "Need More Info", "statusStyle": "orange", "region": "EMEA", "risk": "Low", "riskStyle": "yellow",
+      "whyAged": "Genuinely complex SAML/SSO bug — signature validation fails only on the Experience Cloud portal endpoint, not the standard org endpoint. Same config, same cert, different behavior. Pratiksha did deep SAML Tracer analysis, identified SHA1/SHA256 mismatch, ACS routing, certificate and ProtocolBinding issues. Now escalated to Product team. Issue also appearing in production.",
+      "causedBy": "Product Team", "causedByStyle": "red",
+      "handledWell": "Yes", "handledStyle": "green",
+      "handledNote": "Outstanding work — systematic SAML debugging, SAML Tracer analysis, correct Product team escalation. Customer highly engaged. This appears to be a genuine platform bug (portal vs standard endpoint signature handling). Age fully justified. Production impact should trigger a severity raise."
+    }
+  ],
+
+  "themes": [
+    {
+      "color": "red", "priority": "High",
+      "title": "Integration Failures Driving Oldest Cases",
+      "affected": "Blackstone (473341231) · Audi (473392067) · Unilever/Genpact (473406882)",
+      "desc": "Three of the 11 aged cases involve third-party or API integration failures. These cases tend to age because they require customer-side access, reproduce intermittently, and often need Engineering or vendor involvement. Blackstone is the most urgent — file storage is at 99% capacity.",
+      "action": "Integration cases require a named next step and a customer ETA at all times. If root cause is not identified within 30 days, escalation CL or Engineering engagement should be mandatory."
+    },
+    {
+      "color": "red", "priority": "High",
+      "title": "Production Impact Cases Open Too Long",
+      "affected": "Ather Energy (473232023, 49 days) · Genpact/Unilever (473406882, 26 days)",
+      "desc": "Two cases with production impact are open at 49 and 26 days respectively. Both are currently in Working or Need More Information status. Production cases should never sit beyond 14 days without a clear resolution path or escalation.",
+      "action": "Both cases need immediate review this week. Confirm escalation CL status and customer communication frequency."
+    },
+    {
+      "color": "orange", "priority": "Medium",
+      "title": "NMI Status — Stale or Genuinely Waiting?",
+      "affected": "473316941 · 473341231 · 473405098 · 473406882 · 473409179",
+      "desc": "5 of 11 aged cases are in Need More Information. This status is sometimes used to park cases rather than actively wait for customer input. Any case in NMI for more than 7 days without documented customer activity should be driven to closure or a new next step.",
+      "action": "Audit all 5 NMI cases: when did the customer last respond? If >7 days, send a follow-up today. If >14 days with no response, close."
+    },
+    {
+      "color": "orange", "priority": "Medium",
+      "title": "Solution Provided — Not Closed",
+      "affected": "BON PREU, S.A. (473360937, 33 days)",
+      "desc": "One case has been in Solution Provided status for 33 days without being closed. If the customer has not responded to confirm resolution, the expectation should be to close after a reasonable follow-up window (typically 7 days).",
+      "action": "Lokesh to close 473360937 this week. Solution Provided is not a holding status."
+    },
+    {
+      "color": "yellow", "priority": "Medium",
+      "title": "TSE Workload Concentration",
+      "affected": "Sai Praneeth Allam (3 cases) · Mukul Mishra (2 cases)",
+      "desc": "Sai Praneeth holds 3 aged cases — including a 49-day production issue. Mukul holds 2 including the critical Blackstone storage case. This concentration may indicate capacity issues, complexity, or cases that need to be re-prioritized or reassigned.",
+      "action": "1:1 with Sai Praneeth this week — understand blockers across all three cases. Check if any need to be escalated or reassigned."
+    }
+  ],
+
+  "actions": [
+    { "priority": "Urgent",  "priorityColor": "red",    "action": "Review Sika 473102981 — 67 days open, no escalation on record. Determine root cause and whether Engineering engagement is needed.", "owner": "Sai Saranya Reddy + Madhuri", "due": "Today" },
+    { "priority": "Urgent",  "priorityColor": "red",    "action": "Review Ather Energy 473232023 — production impact, 49 days. Confirm escalation CL status and send proactive customer update.",      "owner": "Sai Praneeth Allam",         "due": "Today" },
+    { "priority": "Urgent",  "priorityColor": "red",    "action": "Assess Blackstone 473341231 — storage at 99%. Determine if emergency action is needed. Consider raising escalation CL.",            "owner": "Mukul Mishra + Madhuri",     "due": "Today" },
+    { "priority": "High",    "priorityColor": "orange", "action": "1:1 with Sai Praneeth Allam — review all 3 aged cases (473232023, 473405098, 473406882) and identify blockers.",                   "owner": "Madhuri",                    "due": "This week" },
+    { "priority": "High",    "priorityColor": "orange", "action": "Audit all 5 NMI cases — confirm customer last activity date. Cases with no response >7 days: send follow-up or close.",            "owner": "All TSEs",                   "due": "This week" },
+    { "priority": "Medium",  "priorityColor": "yellow", "action": "Close BON PREU 473360937 — Solution Provided 33 days ago. No further waiting needed.",                                              "owner": "Lokesh Verma",               "due": "This week" },
+    { "priority": "Medium",  "priorityColor": "yellow", "action": "Set 7-day resolution targets on all 5 recently crossed cases (26–28 days) before they deepen further.",                            "owner": "Madhuri",                    "due": "This week" }
+  ]
+}
+</script>
+<!-- ╔══════════════════════════════════════════════════════════════════════╗
+     ║  END OF DATA — DO NOT EDIT BELOW THIS LINE                         ║
+     ╚══════════════════════════════════════════════════════════════════════╝ -->
+
+<style>
+  :root {
+    --bg:#f0f2f5; --card:#fff; --border:#e2e8f0; --text:#1a202c; --muted:#718096;
+    --red:#e53e3e; --red-light:#fff5f5;
+    --orange:#dd6b20; --orange-light:#fffaf0;
+    --yellow:#d69e2e; --yellow-light:#fffff0;
+    --green:#38a169; --green-light:#f0fff4;
+    --blue:#3182ce; --blue-light:#ebf8ff;
+    --sf-blue:#0070d2;
+    --radius:10px; --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
+  .header{background:linear-gradient(135deg,#0070d2 0%,#032d60 100%);color:#fff;padding:28px 40px 24px;}
+  .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:-.3px;}
+  .header h2{font-size:14px;font-weight:400;opacity:.8;margin-top:4px;}
+  .header-meta{text-align:right;font-size:12px;opacity:.75;line-height:1.8;}
+  .badge-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;}
+  .tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 40px;display:flex;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow-x:auto;}
+  .tab{padding:14px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+  .tab:hover{color:var(--sf-blue);}
+  .tab.active{color:var(--sf-blue);border-bottom-color:var(--sf-blue);}
+  .content{padding:28px 40px;max-width:1400px;margin:0 auto;}
+  .section{display:none;} .section.active{display:block;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;margin-bottom:28px;}
+  .kpi-card{background:var(--card);border-radius:var(--radius);padding:18px 16px;box-shadow:var(--shadow);border-top:3px solid var(--border);text-align:center;}
+  .kpi-card.red{border-top-color:var(--red);} .kpi-card.orange{border-top-color:var(--orange);}
+  .kpi-card.green{border-top-color:var(--green);} .kpi-card.blue{border-top-color:var(--blue);}
+  .kpi-card.yellow{border-top-color:var(--yellow);}
+  .kpi-num{font-size:32px;font-weight:700;line-height:1;}
+  .kpi-num.red{color:var(--red);} .kpi-num.orange{color:var(--orange);} .kpi-num.green{color:var(--green);} .kpi-num.blue{color:var(--blue);} .kpi-num.yellow{color:var(--yellow);}
+  .kpi-label{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.3;}
+  .section-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .table-wrap{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:auto;margin-bottom:28px;}
+  table{width:100%;border-collapse:collapse;min-width:600px;}
+  thead{background:#f7fafc;}
+  th{padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;}
+  td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top;}
+  tr:last-child td{border-bottom:none;} tr:hover td{background:#fafbfc;}
+  .pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+  .pill-red{background:var(--red-light);color:var(--red);}
+  .pill-orange{background:var(--orange-light);color:var(--orange);}
+  .pill-yellow{background:var(--yellow-light);color:var(--yellow);}
+  .pill-green{background:var(--green-light);color:var(--green);}
+  .pill-blue{background:var(--blue-light);color:var(--blue);}
+  .pill-grey{background:#f7fafc;color:var(--muted);border:1px solid var(--border);}
+  .case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:18px;margin-bottom:28px;}
+  .case-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+  .case-card-header{padding:14px 18px 12px;border-left:4px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .sev-red{border-left-color:var(--red)!important;background:var(--red-light)!important;}
+  .sev-orange{border-left-color:var(--orange)!important;background:var(--orange-light)!important;}
+  .sev-yellow{border-left-color:var(--yellow)!important;background:var(--yellow-light)!important;}
+  .sev-blue{border-left-color:var(--blue)!important;background:var(--blue-light)!important;}
+  .case-cl{font-size:11px;font-weight:700;color:var(--muted);}
+  .case-account{font-size:14px;font-weight:700;margin-top:2px;}
+  .case-body{padding:14px 18px;}
+  .case-field{margin-bottom:8px;}
+  .case-field-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:2px;}
+  .case-field-value{font-size:13px;color:var(--text);}
+  .case-divider{height:1px;background:var(--border);margin:10px 0;}
+  .case-expand{display:none;padding:0 18px 14px;}
+  .case-expand.open{display:block;}
+  .case-expand p{font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.6;}
+  .case-action-box{background:#fffbeb;border:1px solid #f6e05e;border-radius:6px;padding:10px 12px;font-size:12px;margin-top:8px;line-height:1.5;}
+  .expand-toggle{display:block;text-align:center;padding:8px;font-size:11px;font-weight:600;color:var(--sf-blue);border-top:1px solid var(--border);cursor:pointer;user-select:none;background:#fafbff;}
+  .expand-toggle:hover{background:var(--blue-light);}
+  .theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:28px;}
+  .theme-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;border-left:4px solid var(--border);}
+  .theme-card.red{border-left-color:var(--red);} .theme-card.orange{border-left-color:var(--orange);} .theme-card.yellow{border-left-color:var(--yellow);}
+  .theme-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+  .theme-affected{font-size:11px;color:var(--muted);margin-bottom:10px;}
+  .theme-desc{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:10px;}
+  .theme-action{background:#f7fafc;border-radius:6px;padding:10px 12px;font-size:12px;color:var(--text);border-left:3px solid var(--sf-blue);line-height:1.5;}
+  .priority-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+  .dot-red{background:var(--red);} .dot-orange{background:var(--orange);} .dot-yellow{background:var(--yellow);}
+  .two-col{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;margin-bottom:28px;}
+  .chart-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;}
+  .chart-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;}
+  .donut-row{display:flex;align-items:center;gap:20px;}
+  .donut-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
+  .donut-svg{transform:rotate(-90deg);}
+  .donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-size:20px;font-weight:700;color:var(--text);line-height:1;}
+  .donut-center small{display:block;font-size:10px;font-weight:400;color:var(--muted);}
+  .donut-legend{display:flex;flex-direction:column;gap:8px;}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .bar-chart{display:flex;flex-direction:column;gap:10px;}
+  .bar-row{display:flex;align-items:center;gap:10px;}
+  .bar-label{width:170px;font-size:11px;color:var(--text);flex-shrink:0;text-align:right;}
+  .bar-outer{flex:1;background:var(--border);border-radius:4px;overflow:hidden;height:22px;}
+  .bar-inner{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:600;color:#fff;min-width:30px;}
+  .bar-val{font-size:11px;font-weight:700;width:36px;color:var(--text);}
+  .footer{text-align:center;padding:20px 40px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);background:#fff;margin-top:16px;}
+  @media(max-width:800px){.two-col{grid-template-columns:1fr;}}
+  @media(max-width:700px){.content{padding:16px 14px;}.header{padding:20px 14px;}.tabs{padding:0 4px;}.tab{padding:12px 10px;font-size:12px;}.case-grid{grid-template-columns:1fr;}.kpi-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<div class="header" id="hdr"></div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview',this)">Overview</div>
+  <div class="tab"        onclick="showTab('cases',this)">Case Details</div>
+  <div class="tab"        onclick="showTab('themes',this)">Themes &amp; Insights</div>
+  <div class="tab"        onclick="showTab('actions',this)">Action Items</div>
+</div>
+
+<div class="content">
+  <div class="section active" id="section-overview"></div>
+  <div class="section"        id="section-cases"></div>
+  <div class="section"        id="section-themes"></div>
+  <div class="section"        id="section-actions"></div>
+</div>
+
+<div class="footer" id="ftr"></div>
+
+<script>
+const D = JSON.parse(document.getElementById('weekly-data').textContent);
+const $ = id => document.getElementById(id);
+const pill = (text, style) => text
+  ? `<span class="pill pill-${style||'grey'}">${text}</span>`
+  : `<span class="pill pill-grey">—</span>`;
+
+// ─── HEADER ────────────────────────────────────────────────────────────────
+$('hdr').innerHTML = `
+<div class="header-top">
+  <div>
+    <div style="font-size:11px;opacity:.65;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;">Salesforce Support · OrgCS</div>
+    <h1>Aged Cases Review</h1>
+    <h2>Cases open &gt; ${D.meta.threshold} days — ${D.meta.region}</h2>
+    <div class="badge-row">
+      <span class="badge">${D.kpis.total} Aged Cases</span>
+      <span class="badge">Threshold: ${D.meta.threshold} days</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div><strong>${D.meta.preparedBy}</strong></div>
+    <div>${D.meta.role}</div>
+    <div style="margin-top:6px;">Prepared: ${D.meta.preparedDate}</div>
+    <div>Data source: OrgCS Salesforce</div>
+  </div>
+</div>`;
+
+// ─── FOOTER ────────────────────────────────────────────────────────────────
+$('ftr').innerHTML = `Aged Cases &gt; ${D.meta.threshold} days &nbsp;·&nbsp; Data source: OrgCS Salesforce &nbsp;·&nbsp; Prepared by ${D.meta.preparedBy} &nbsp;·&nbsp; ${D.meta.preparedDate}`;
+
+// ─── OVERVIEW ──────────────────────────────────────────────────────────────
+const kpiDef = [
+  { num: D.kpis.total,              label: 'Total Aged Cases (>25 days)',        c: 'red'    },
+  { num: D.kpis.critical,           label: 'Critical (60+ days)',                c: 'red'    },
+  { num: D.kpis.productionImpacting,label: 'Production-Impacting Cases',         c: 'orange' },
+  { num: D.kpis.nmiStale,           label: 'In Need More Information',           c: 'orange' },
+  { num: D.kpis.solutionNotClosed,  label: 'Solution Provided — Not Closed',     c: 'yellow' },
+  { num: D.kpis.topTSECount,        label: `Cases on ${D.kpis.topTSEName}`,      c: 'orange' }
+];
+const kpiHtml = `<div class="kpi-grid">${kpiDef.map(k=>`
+  <div class="kpi-card ${k.c}">
+    <div class="kpi-num ${k.c}">${k.num}</div>
+    <div class="kpi-label">${k.label}</div>
+  </div>`).join('')}</div>`;
+
+// Donut — age distribution
+let donutOffset = 0;
+const donutSegs = D.ageDistribution.map(s => {
+  const seg = `<circle cx="21" cy="21" r="15.915" fill="transparent" stroke="${s.color}" stroke-width="5"
+    stroke-dasharray="${s.pct} ${100-s.pct}" stroke-dashoffset="${-donutOffset}"/>`;
+  donutOffset += s.pct;
+  return seg;
+}).join('');
+const legendHtml = D.ageDistribution.map(s =>
+  `<div class="legend-item"><div class="legend-dot" style="background:${s.color}"></div>${s.label} (${s.count})</div>`
+).join('');
+const donutHtml = `
+<div class="chart-card">
+  <div class="chart-label">Age Distribution</div>
+  <div class="donut-row">
+    <div class="donut-wrap">
+      <svg class="donut-svg" width="110" height="110" viewBox="0 0 42 42">
+        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#e2e8f0" stroke-width="5"/>
+        ${donutSegs}
+      </svg>
+      <div class="donut-center">${D.kpis.total}<small>cases</small></div>
+    </div>
+    <div class="donut-legend">${legendHtml}</div>
+  </div>
+</div>`;
+
+// Age bar chart per case
+const barsHtml = `
+<div class="chart-card">
+  <div class="chart-label">Days Open by Case</div>
+  <div class="bar-chart">
+    ${D.summaryTable.map(c => {
+      const maxDays = 70;
+      const w = Math.round((c.ageDays / maxDays) * 100);
+      const color = c.ageDays >= 60 ? '#e53e3e' : c.ageDays >= 45 ? '#dd6b20' : c.ageDays >= 30 ? '#d69e2e' : '#3182ce';
+      return `<div class="bar-row">
+        <div class="bar-label" style="font-size:10px;">${c.caseNum}</div>
+        <div class="bar-outer"><div class="bar-inner" style="width:${w}%;background:${color};">${c.ageDays}d</div></div>
+        <div class="bar-val" style="color:${color};font-size:11px;">${c.ageDays}d</div>
+      </div>`;
+    }).join('')}
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-top:12px;">Target: all cases resolved or escalated before 25 days</div>
+</div>`;
+
+// Summary table
+const summaryRows = D.summaryTable.map(r => `
+  <tr>
+    <td><strong>${r.caseNum}</strong></td>
+    <td><strong>${r.account}</strong></td>
+    <td>${r.owner}</td>
+    <td>${pill(r.ageDays + ' days', r.ageStyle)}</td>
+    <td>${pill(r.status, r.statusStyle)}</td>
+    <td>${r.region}</td>
+    <td>${pill(r.risk, r.riskStyle)}</td>
+    <td>${pill(r.causedBy, r.causedByStyle)}</td>
+    <td style="max-width:220px;font-size:12px;color:var(--text);line-height:1.5;">${r.whyAged}</td>
+    <td>
+      ${pill(r.handledWell, r.handledStyle)}
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4;">${r.handledNote}</div>
+    </td>
+  </tr>`).join('');
+
+$('section-overview').innerHTML = kpiHtml +
+  `<div class="two-col">${donutHtml}${barsHtml}</div>
+   <div class="section-title">Aged Case Summary</div>
+   <div class="table-wrap"><table>
+     <thead><tr>
+       <th>Case #</th><th>Account</th><th>Owner</th><th>Age</th><th>Status</th><th>Region</th><th>Risk</th>
+       <th>Caused By</th><th>Why It Aged</th><th>Handled Well?</th>
+     </tr></thead>
+     <tbody>${summaryRows}</tbody>
+   </table></div>`;
+
+// ─── CASES ─────────────────────────────────────────────────────────────────
+const caseCards = D.cases.map(c => `
+  <div class="case-card">
+    <div class="case-card-header sev-${c.severity}">
+      <div>
+        <div class="case-cl">Case ${c.caseNum} · ${c.region}</div>
+        <div class="case-account">${c.account}</div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+          ${c.badges.map(b => pill(b.text, b.style)).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="case-field">
+        <div class="case-field-label">Issue</div>
+        <div class="case-field-value">${c.issue}</div>
+      </div>
+      <div class="case-divider"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="case-field"><div class="case-field-label">Owner</div><div class="case-field-value">${c.owner}</div></div>
+        <div class="case-field"><div class="case-field-label">Status</div><div class="case-field-value">${c.status}</div></div>
+      </div>
+      ${c.riskFlag ? `<div style="background:var(--red-light);border:1px solid #fed7d7;border-radius:6px;padding:8px 12px;margin-top:10px;font-size:12px;color:var(--red);"><strong>Risk:</strong> ${c.riskFlag}</div>` : ''}
+    </div>
+    <div class="expand-toggle" onclick="toggleExpand(this)">▼ Show Detail &amp; Action</div>
+    <div class="case-expand">
+      <p>${c.narrative}</p>
+      <div class="case-action-box"><strong>Recommended action:</strong> ${c.action}</div>
+    </div>
+  </div>`).join('');
+
+$('section-cases').innerHTML = `<div class="case-grid">${caseCards}</div>`;
+
+// ─── THEMES ────────────────────────────────────────────────────────────────
+const themeCards = D.themes.map(t => `
+  <div class="theme-card ${t.color}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
+      <div class="theme-title">${t.title}</div>
+      ${pill(t.priority, t.color)}
+    </div>
+    <div class="theme-affected">${t.affected}</div>
+    <div class="theme-desc">${t.desc}</div>
+    <div class="theme-action"><strong>Action:</strong> ${t.action}</div>
+  </div>`).join('');
+
+$('section-themes').innerHTML = `
+  <div class="section-title">Key Themes</div>
+  <div class="theme-grid">${themeCards}</div>`;
+
+// ─── ACTIONS ───────────────────────────────────────────────────────────────
+const actionRows = D.actions.map(a => `
+  <tr>
+    <td><span class="priority-dot dot-${a.priorityColor}"></span><strong>${a.priority}</strong></td>
+    <td>${a.action}</td>
+    <td>${a.owner}</td>
+    <td>${a.due}</td>
+  </tr>`).join('');
+
+$('section-actions').innerHTML = `
+  <div class="section-title">Action Items — ${D.meta.preparedDate}</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priority</th><th>Action</th><th>Owner</th><th>Due</th></tr></thead>
+    <tbody>${actionRows}</tbody>
+  </table></div>`;
+
+// ─── TAB SWITCHING ─────────────────────────────────────────────────────────
+function showTab(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleExpand(btn) {
+  const expand = btn.previousElementSibling;
+  const isOpen = expand.classList.contains('open');
+  expand.classList.toggle('open');
+  btn.textContent = isOpen ? '▼ Show Detail & Action' : '▲ Hide Detail';
+}
+</script>
+</body>
+</html>
