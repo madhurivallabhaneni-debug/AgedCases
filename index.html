@@ -324,49 +324,59 @@
   "themes": [
     {
       "color": "red", "priority": "High",
-      "title": "Integration Failures Driving Oldest Cases",
-      "affected": "Blackstone (473341231) · Audi (473392067) · Unilever/Genpact (473406882)",
-      "desc": "Three of the 11 aged cases involve third-party or API integration failures. These cases tend to age because they require customer-side access, reproduce intermittently, and often need Engineering or vendor involvement. Blackstone is the most urgent — file storage is at 99% capacity.",
-      "action": "Integration cases require a named next step and a customer ETA at all times. If root cause is not identified within 30 days, escalation CL or Engineering engagement should be mandatory."
+      "title": "Platform Bugs Blocking Resolution — Engineering Not Engaged",
+      "affected": "Ather Energy (473232023) · Blackstone (473341231) · IBM Belgium (473409179) · ABB (473405869)",
+      "desc": "4 cases are aged because of confirmed or strongly suspected platform-level issues — record lock behaviour, ContentDocumentLink visibility anomalies, SAML signature handling differences between portal and standard endpoints, and Data Kit removal. In all four, the TSE has done the right technical work but cannot resolve without Engineering or Product team action. Blackstone and Ather are the most urgent: 99% storage consumption and a 49-day Sev-1 production case respectively.",
+      "action": "Engineering escalation should be mandatory at 21 days for any case where the root cause points to platform behaviour. For Blackstone and Ather Energy, escalation CLs should be raised this week if not already done. For IBM Belgium, confirm Product team ticket number and share an ETA with the customer."
     },
     {
       "color": "red", "priority": "High",
-      "title": "Production Impact Cases Open Too Long",
-      "affected": "Ather Energy (473232023, 49 days) · Genpact/Unilever (473406882, 26 days)",
-      "desc": "Two cases with production impact are open at 49 and 26 days respectively. Both are currently in Working or Need More Information status. Production cases should never sit beyond 14 days without a clear resolution path or escalation.",
-      "action": "Both cases need immediate review this week. Confirm escalation CL status and customer communication frequency."
+      "title": "Sev-1 Production Case Unresolved at 49 Days",
+      "affected": "Ather Energy (473232023)",
+      "desc": "This is a Sev-1 production case — a dedicated Slack channel was raised on Day 1, which was correct. However, 49 days later the case is still Working with no resolution. The record lock error is hard to reproduce consistently, but the investigation pace and escalation path need to be reviewed. A case at this age and severity should have an open Engineering ticket or an active escalation CL.",
+      "action": "Pull the full Slack and case comment history. If no Engineering ticket is open, raise one today. If no escalation CL exists, create it. Send a proactive update to the customer this week regardless."
     },
     {
       "color": "orange", "priority": "Medium",
-      "title": "NMI Status — Stale or Genuinely Waiting?",
-      "affected": "473316941 · 473341231 · 473405098 · 473406882 · 473409179",
-      "desc": "5 of 11 aged cases are in Need More Information. This status is sometimes used to park cases rather than actively wait for customer input. Any case in NMI for more than 7 days without documented customer activity should be driven to closure or a new next step.",
-      "action": "Audit all 5 NMI cases: when did the customer last respond? If >7 days, send a follow-up today. If >14 days with no response, close."
+      "title": "Investigation Loops — Same Ask Repeated Without Escalating",
+      "affected": "Unilever/Genpact (473406882) · Blackstone (473341231)",
+      "desc": "Two cases show a pattern where the TSE has been making the same request repeatedly without changing approach. For Unilever/Genpact, the same debug log request has been sent 5+ times over 26 days — the error never appears in the logs. For Blackstone, Mukul promised resolution 'this week' on May 25 without a clear path to closing. When the same approach fails multiple times, it signals the need to escalate or change strategy — not repeat.",
+      "action": "For Unilever/Genpact: stop requesting customer-side debug logs and escalate to Engineering to pull server-side traces. For Blackstone: if the investigation hasn't progressed since May 25, raise an Engineering ticket this week."
     },
     {
       "color": "orange", "priority": "Medium",
-      "title": "Solution Provided — Not Closed",
-      "affected": "BON PREU, S.A. (473360937, 33 days)",
-      "desc": "One case has been in Solution Provided status for 33 days without being closed. If the customer has not responded to confirm resolution, the expectation should be to close after a reasonable follow-up window (typically 7 days).",
-      "action": "Lokesh to close 473360937 this week. Solution Provided is not a holding status."
+      "title": "Case Misrouting Adding Unnecessary Age",
+      "affected": "Audi AG (473392067) · BON PREU (473360937)",
+      "desc": "Two cases were routed to the wrong team, adding days of delay before the right TSE could begin investigation. Audi was picked up by a AMER-EST TSE (Petra) despite the customer being in Portugal timezone — 3 days lost before Pratibha took over. BON PREU was initially handled under MC Engagement, then transferred to Data Cloud. In both cases, the delay was avoidable.",
+      "action": "Review routing logic for Portuguese-timezone customers assigned to AMER queues. For new cases, lead or manager review of assignment within 24 hours should catch timezone mismatches before they delay investigation."
+    },
+    {
+      "color": "yellow", "priority": "Medium",
+      "title": "Cases Technically Resolved But Not Closed",
+      "affected": "BON PREU (473360937) · Sika (473102981)",
+      "desc": "BON PREU has had Solution Provided status for 33 days — the root cause was confirmed (documented expected behavior) and a help article was referenced. Sika has had the sandbox fix deployed since May 6 — the customer just needs to apply it to production. Both cases are functionally done from the TSE's side but remain open because the final step requires customer action.",
+      "action": "BON PREU: close this week — customer has not responded to the solution. Sika: send a firm nudge to Vishal to deploy to production and confirm, then close. Do not let technical completion sit in open status indefinitely."
     },
     {
       "color": "yellow", "priority": "Medium",
       "title": "TSE Workload Concentration",
       "affected": "Sai Praneeth Allam (3 cases) · Mukul Mishra (2 cases)",
-      "desc": "Sai Praneeth holds 3 aged cases — including a 49-day production issue. Mukul holds 2 including the critical Blackstone storage case. This concentration may indicate capacity issues, complexity, or cases that need to be re-prioritized or reassigned.",
-      "action": "1:1 with Sai Praneeth this week — understand blockers across all three cases. Check if any need to be escalated or reassigned."
+      "desc": "Sai Praneeth holds 3 aged cases simultaneously — a 49-day Sev-1, a 26-day production NMI, and a 26-day advisory case. Mukul holds 2 including the Blackstone storage emergency. Sai Praneeth's case load in particular includes the two most technically blocked cases on the list. From the comments, investigation quality is good — the concern is capacity and whether one TSE can drive three complex cases simultaneously.",
+      "action": "1:1 with Sai Praneeth this week. Consider whether Ather Energy (473232023) needs a second TSE or a senior lead involved given its age and production status."
     }
   ],
 
   "actions": [
-    { "priority": "Urgent",  "priorityColor": "red",    "action": "Review Sika 473102981 — 67 days open, no escalation on record. Determine root cause and whether Engineering engagement is needed.", "owner": "Sai Saranya Reddy + Madhuri", "due": "Today" },
-    { "priority": "Urgent",  "priorityColor": "red",    "action": "Review Ather Energy 473232023 — production impact, 49 days. Confirm escalation CL status and send proactive customer update.",      "owner": "Sai Praneeth Allam",         "due": "Today" },
-    { "priority": "Urgent",  "priorityColor": "red",    "action": "Assess Blackstone 473341231 — storage at 99%. Determine if emergency action is needed. Consider raising escalation CL.",            "owner": "Mukul Mishra + Madhuri",     "due": "Today" },
-    { "priority": "High",    "priorityColor": "orange", "action": "1:1 with Sai Praneeth Allam — review all 3 aged cases (473232023, 473405098, 473406882) and identify blockers.",                   "owner": "Madhuri",                    "due": "This week" },
-    { "priority": "High",    "priorityColor": "orange", "action": "Audit all 5 NMI cases — confirm customer last activity date. Cases with no response >7 days: send follow-up or close.",            "owner": "All TSEs",                   "due": "This week" },
-    { "priority": "Medium",  "priorityColor": "yellow", "action": "Close BON PREU 473360937 — Solution Provided 33 days ago. No further waiting needed.",                                              "owner": "Lokesh Verma",               "due": "This week" },
-    { "priority": "Medium",  "priorityColor": "yellow", "action": "Set 7-day resolution targets on all 5 recently crossed cases (26–28 days) before they deepen further.",                            "owner": "Madhuri",                    "due": "This week" }
+    { "priority": "Urgent",  "priorityColor": "red",    "action": "Ather Energy 473232023 — 49-day Sev-1 production case. Confirm whether an Engineering ticket is open. If not, raise one today. Send proactive customer update regardless.",           "owner": "Sai Praneeth + Madhuri", "due": "Today" },
+    { "priority": "Urgent",  "priorityColor": "red",    "action": "Blackstone 473341231 — storage at 99%. Check if Mukul's May 25 commitment was delivered. If not, raise Engineering escalation today. Customer should not be left without an ETA.", "owner": "Mukul Mishra + Madhuri", "due": "Today" },
+    { "priority": "Urgent",  "priorityColor": "red",    "action": "Sika 473102981 — sandbox fix deployed May 6. Send firm nudge to customer (Vishal) to deploy to production and confirm. Close once done.",                                            "owner": "Sai Saranya Reddy",      "due": "Today" },
+    { "priority": "High",    "priorityColor": "orange", "action": "Unilever/Genpact 473406882 — stop repeating debug log requests. Escalate to Engineering to pull server-side traces for 'Regex too complicated' error.",                              "owner": "Sai Praneeth Allam",     "due": "This week" },
+    { "priority": "High",    "priorityColor": "orange", "action": "IBM Belgium 473409179 — issue now hitting production. Raise case severity. Confirm Product team ticket number and share ETA with customer.",                                          "owner": "Pratiksha Unhale",        "due": "This week" },
+    { "priority": "High",    "priorityColor": "orange", "action": "1:1 with Sai Praneeth Allam — review all 3 aged cases. Assess whether Ather Energy needs a second TSE or senior lead involvement.",                                                  "owner": "Madhuri",                "due": "This week" },
+    { "priority": "Medium",  "priorityColor": "yellow", "action": "Close BON PREU 473360937 — root cause confirmed (documented expected behavior), solution provided 33 days ago. Customer has not responded — close.",                                   "owner": "Lokesh Verma",           "due": "This week" },
+    { "priority": "Medium",  "priorityColor": "yellow", "action": "Audi AG 473392067 — awaiting Product team response on null payload API event bug. Chase R&D team for update and communicate ETA to customer. Consider escalation CL.",               "owner": "Pratibha Shekhawat",     "due": "This week" },
+    { "priority": "Medium",  "priorityColor": "yellow", "action": "ABB 473405869 — confirm Data Kit removal request has been raised with internal team. Share ETA with customer.",                                                                       "owner": "Vinay Talapalle",        "due": "This week" },
+    { "priority": "Low",     "priorityColor": "yellow", "action": "Review routing logic for Portuguese-timezone customers — Audi was picked up by an EST TSE, costing 3 days. Raise with leads to prevent repeat.",                                     "owner": "Madhuri",                "due": "Next sync" }
   ]
 }
 </script>
